@@ -11,17 +11,17 @@ int randomNumber(int min, int max);
 // ARGS: single number (number of iterations)
 int main(int argc, char *argv[])
 {
-    int interationCount = atoi(argv[1]);
+    int iterationCount = atoi(argv[1]);
 
     pthread_t tid;
     pthread_attr_t attr;
 
     pthread_attr_init(&attr);
-    pthread_create(&tid, &attr, calculateNumberOfPointsInsideCircle, &interationCount);
+    pthread_create(&tid, &attr, calculateNumberOfPointsInsideCircle, &iterationCount);
 
     pthread_join(tid, NULL);
 
-    float pi = 4.0f * numerOfPointsInCircle / interationCount;
+    float pi = 4.0f * numerOfPointsInCircle / iterationCount;
 
     printf("Estimated Pi: %f\n", pi);
     printf("Pi: %f\n", 3.14159265359);

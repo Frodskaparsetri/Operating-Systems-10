@@ -11,7 +11,16 @@ int randomNumber(int min, int max);
 // ARGS: single number (number of iterations)
 int main(int argc, char *argv[])
 {
-    int iterationCount = atoi(argv[1]);
+    // NOTE: the first element in the argv, is the name of the execution path
+    // i.e. if you executed ./my-dir/my-app. then the argc would be "./my-dir/my-app"
+    const int skipExecutableArgName = 1;
+    if (argc - skipExecutableArgName <= 0)
+    {
+        printf("ERROR: You need to specify a number of iterations \n");
+        return 1;
+    }
+
+    int iterationCount = atoi(argv[skipExecutableArgName]);
 
 #pragma omp parallel for
     for (int i = 0; i < iterationCount; i++)

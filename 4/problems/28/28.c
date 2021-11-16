@@ -13,7 +13,7 @@
 #define FAILED_TO_CREATE_PID -1
 #define FAILED_TO_KILL_PID -1
 
-struct Pidmap
+typedef struct
 {
     char *map;
     int min;
@@ -23,9 +23,9 @@ struct Pidmap
     int availableCount;
     char free;
     char occupied;
-};
+} Pidmap;
 
-struct Pidmap pidmap;
+Pidmap pidmap;
 
 int allocate_map();
 int allocate_pid();

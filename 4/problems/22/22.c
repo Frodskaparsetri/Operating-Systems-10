@@ -10,24 +10,34 @@ void *calculateAverage(void *param);
 void *calculateMin(void *param);
 void *calculateMax(void *param);
 
-struct NumberCrunch
+typedef struct
 {
     int *numbers;
     int count;
-};
+} NumberCrunch;
 
 // ARGS: A space seperated list of numbers
 int main(int argc, char *argv[])
 {
     // Parse the args into a list of numbers
     int startingArg = 1;
+
+    // NOTE: the first element in the argv, is the name of the execution path
+    // i.e. if you executed ./my-dir/my-app. then the argc would be "./my-dir/my-app"
     int argCountWithoutFirstArg = argc - startingArg;
 
-    struct NumberCrunch params;
+    if (argCountWithoutFirstArg <= 0)
+    {
+        printf("ERROR: You need to specify a space seperated list of numbers\n");
+        return 1;
+    }
+
+    NumberCrunch params;
     params.count = argCountWithoutFirstArg;
     params.numbers = malloc(argCountWithoutFirstArg * sizeof(int));
     for (int i = startingArg, j = 0; i < argc; i++, j++)
     {
+        // Convert string to integer
         params.numbers[j] = atoi(argv[i]);
     }
 
@@ -55,7 +65,7 @@ int main(int argc, char *argv[])
 
 void *calculateAverage(void *param)
 {
-    struct NumberCrunch *numbers = param;
+    NumberCrunch *numbers = param;
 
     int sum = 0;
     for (int i = 0; i < numbers->count; i++)
@@ -70,7 +80,7 @@ void *calculateAverage(void *param)
 
 void *calculateMin(void *param)
 {
-    struct NumberCrunch *numbers = param;
+    NumberCrunch *numbers = param;
 
     minimum = 100000;
     for (int i = 0; i < numbers->count; i++)
@@ -83,9 +93,10 @@ void *calculateMin(void *param)
 
     pthread_exit(0);
 }
+
 void *calculateMax(void *param)
 {
-    struct NumberCrunch *numbers = param;
+    NumberCrunch *numbers = param;
 
     maximum = -10000;
     for (int i = 0; i < numbers->count; i++)

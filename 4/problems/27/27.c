@@ -10,12 +10,21 @@ void *calculateFibonachiNumbers(void *param);
 // ARGS: single number (number of fibonachi sequences)
 int main(int argc, char *argv[])
 {
+    // NOTE: the first element in the argv, is the name of the execution path
+    // i.e. if you executed ./my-dir/my-app. then the argc would be "./my-dir/my-app"
+    const int skipExecutableArgName = 1;
+    if (argc - skipExecutableArgName <= 0)
+    {
+        printf("ERROR: You need to specify a number to generate a fibonachi sequence \n");
+        return 1;
+    }
+
     // confirm with:
     // https://www.omnicalculator.com/math/fibonacci
 
     /* adding a count, so it adds up to the amount the user specified 
     and not based on the array - i.e. from index 0 */
-    int numberOfFibonachiSequences = atoi(argv[1]) + 1;
+    int numberOfFibonachiSequences = atoi(argv[skipExecutableArgName]) + 1;
 
     pthread_t tid;
     pthread_attr_t attr;

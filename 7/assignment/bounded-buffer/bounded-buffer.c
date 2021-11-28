@@ -6,9 +6,7 @@
 
 // + Assignment: Allocate Semaphores
 // -------------
-sem_t mutex;
-sem_t empty;
-sem_t full;
+
 // -------------
 
 const int iterrations = 10;
@@ -28,9 +26,7 @@ int main(int argc, char **argv)
 
     // + Assignment: Init Semaphores
     // -------------
-    sem_init(&mutex, 0, 1);
-    sem_init(&empty, 0, bufferSize);
-    sem_init(&full, 0, 0);
+
     // -------------
 
     pthread_t tProducer, tConsumer;
@@ -57,9 +53,7 @@ int main(int argc, char **argv)
 
     // + Assignment: Clean up Semaphores
     // -------------
-    sem_init(&mutex, 0, 1);
-    sem_init(&empty, 0, bufferSize);
-    sem_init(&full, 0, 0);
+
     // -------------
 
     pthread_attr_destroy(&attr);
@@ -76,14 +70,10 @@ void *producer(void *arg)
 
         // + Assignment: Add to buffer
         // -------------
-        sem_wait(&empty);
-        sem_wait(&mutex);
 
         buffer_add(&b, value);
         printf("Producer: + Added \"%d\" to buffer\n", value);
 
-        sem_post(&mutex);
-        sem_post(&full);
         // -------------
     }
 }
@@ -94,14 +84,10 @@ void *consumer(void *arg)
     {
         // + Assignment: Remove from the buffer
         // -------------
-        sem_wait(&full);
-        sem_wait(&mutex);
 
         int value = buffer_remove(&b);
         printf("Consumer: - Removed \"%d\" from buffer\n", value);
 
-        sem_post(&mutex);
-        sem_post(&empty);
         // -------------
     }
 }

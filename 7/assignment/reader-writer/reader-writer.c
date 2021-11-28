@@ -6,9 +6,7 @@
 
 // + Assignment: Allocate Semaphores
 // -------------
-sem_t mutex;
-sem_t wrt;
-int readCount;
+
 // -------------
 
 int database = 5;
@@ -35,9 +33,7 @@ int main(int argc, char **argv)
 
     // + Assignment: Init Semaphores
     // -------------
-    sem_init(&mutex, 0, 1);
-    sem_init(&wrt, 0, 1);
-    readCount = 0;
+
     // -------------
 
     // execute
@@ -54,8 +50,7 @@ int main(int argc, char **argv)
 
     // + Assignment: Clean up Semaphores
     // -------------
-    sem_destroy(&mutex);
-    sem_destroy(&wrt);
+
     // -------------
 
     return 0;
@@ -71,9 +66,7 @@ void *writer(void *args)
 
         // + Assignment: Write to "Database"
         // -------------
-        sem_wait(&wrt);
-        database = value;
-        sem_post(&wrt);
+
         // -------------
 
         printf("------\nWriter: wrote \"%d\" to database\n", value);
@@ -87,25 +80,9 @@ void *reader(void *args)
     {
         // + Assignment: Read from "Database"
         // -------------
-        sem_wait(&mutex);
-        readCount++; // the number of readers has now increased by 1
-
-        if (readCount >= 1)
-        {
-            sem_wait(&wrt);   // this ensures no writer can enter if there is 1+ readers
-            sem_post(&mutex); // other readers can enter while the currend read is inside the critical section
-        }
 
         printf("Reader %d: read \"%d\" to database\n", readerId, database);
 
-        sem_wait(&mutex);
-        readCount--; // a reader wants to leave
-
-        if (readCount <= 0) // no reader is left in the critical section
-        {
-            sem_post(&wrt);   // writers can enter
-            sem_post(&mutex); // reader leaves
-        }
         // -------------
 
         usleep(readerSleepTimeUs);

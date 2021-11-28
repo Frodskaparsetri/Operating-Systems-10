@@ -1,0 +1,1 @@
+clear && gcc -w -c *.c && gcc -pthread -o program *.o && ./program

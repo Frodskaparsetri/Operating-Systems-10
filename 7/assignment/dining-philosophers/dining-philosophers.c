@@ -64,7 +64,6 @@ void *philosopher(void *args)
 {
     int philosopherId = *((int *)args);
 
-    printf("inside: %d\n", philosopherId);
     while (amountOfRice > 0)
     {
         printf("Philosopher %d: Thinking...\n", philosopherId);

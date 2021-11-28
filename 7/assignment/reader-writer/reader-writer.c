@@ -12,8 +12,8 @@ int readCount;
 // -------------
 
 int database = 5;
-const int writerSleepTimeUs = 5000000;
-const int readerSleepTimeUs = 2000000;
+const int writerSleepTimeUs = 1000000 / 3;
+const int readerSleepTimeUs = 1000000 / 3;
 
 void *
 writer(void *args);
@@ -76,7 +76,7 @@ void *writer(void *args)
         sem_post(&wrt);
         // -------------
 
-        printf("Writer: wrote \"%d\" to database\n", value);
+        printf("------\nWriter: wrote \"%d\" to database\n", value);
     }
 }
 

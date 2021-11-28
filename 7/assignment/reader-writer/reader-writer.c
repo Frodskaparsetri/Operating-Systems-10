@@ -103,9 +103,10 @@ void *reader(void *args)
 
         if (readCount <= 0) // no reader is left in the critical section
         {
-            sem_post(&wrt);   // writers can enter
-            sem_post(&mutex); // reader leaves
+            sem_post(&wrt); // writers can enter
         }
+        sem_post(&mutex); // reader leaves
+
         // -------------
 
         usleep(readerSleepTimeUs);

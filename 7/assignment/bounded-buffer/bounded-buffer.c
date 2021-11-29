@@ -86,6 +86,7 @@ void *producer(void *arg)
         sem_post(&full);
         // -------------
     }
+    pthread_exit(0);
 }
 
 void *consumer(void *arg)
@@ -104,4 +105,5 @@ void *consumer(void *arg)
         sem_post(&empty);
         // -------------
     }
+    pthread_exit(0);
 }

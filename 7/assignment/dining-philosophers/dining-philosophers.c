@@ -10,8 +10,7 @@ const int maxThinkingTimeUs = 1000000 / 3;
 
 // + Assignment: Allocate Semaphores
 // -------------
-sem_t chopsticks[philosopherCount];
-sem_t mutex;
+
 // -------------
 
 void *philosopher(void *args);
@@ -32,9 +31,7 @@ int main(int argc, char **argv)
     for (int i = 0; i < philosopherCount; i++)
     {
         philosopherIds[i] = i + 1;
-        sem_init(&chopsticks[i], 0, 1);
     }
-    sem_init(&mutex, 0, 1);
     // -------------
 
     // Execution
@@ -50,11 +47,7 @@ int main(int argc, char **argv)
 
     // + Assignment: Clean up Semaphores
     // -------------
-    for (int i = 0; i < philosopherCount; i++)
-    {
-        sem_destroy(&chopsticks[i]);
-    }
-    sem_destroy(&mutex);
+
     // -------------
 
     return 0;
@@ -73,19 +66,10 @@ void *philosopher(void *args)
 
         // + Assignment: Eat
         // -------------
-        sem_t left = chopsticks[philosopherId];
-        sem_t right = chopsticks[(philosopherId + 1) % philosopherCount];
 
-        sem_wait(left);
-        sem_wait(right);
-
-        sem_wait(&mutex);
         amountOfRice--;
         printf("Philosopher %d: Ate\tRice left: %d \n", philosopherId, amountOfRice);
-        sem_post(&mutex);
 
-        sem_post(left);
-        sem_post(right);
         // -------------
     }
     pthread_exit(0);

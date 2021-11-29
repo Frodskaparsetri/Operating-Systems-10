@@ -10,7 +10,7 @@ const int maxThinkingTimeUs = 1000000 / 3;
 
 // + Assignment: Allocate Semaphores
 // -------------
-sem_t chopsticks[philosopherCount];
+sem_t chopsticks[5];
 sem_t mutex;
 // -------------
 
@@ -64,7 +64,7 @@ void *philosopher(void *args)
 {
     int philosopherId = *((int *)args);
 
-    while (amountOfRice > 0)
+    while (amountOfRice >= 0)
     {
         printf("Philosopher %d: Thinking...\n", philosopherId);
 
@@ -76,16 +76,19 @@ void *philosopher(void *args)
         sem_t left = chopsticks[philosopherId];
         sem_t right = chopsticks[(philosopherId + 1) % philosopherCount];
 
-        sem_wait(left);
-        sem_wait(right);
+        sem_wait(&left);
+        sem_wait(&right);
 
         sem_wait(&mutex);
-        amountOfRice--;
-        printf("Philosopher %d: Ate\tRice left: %d \n", philosopherId, amountOfRice);
+        if (amountOfRice > 0)
+        {
+            amountOfRice--;
+            printf("Philosopher %d: Ate\tRice left: %d \n", philosopherId, amountOfRice);
+        }
         sem_post(&mutex);
 
-        sem_post(left);
-        sem_post(right);
+        sem_post(&left);
+        sem_post(&right);
         // -------------
     }
     pthread_exit(0);

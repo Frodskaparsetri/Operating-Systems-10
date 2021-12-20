@@ -1,6 +1,7 @@
 version: "3.9"
-services:
+
 # the various services
+services:
 # api - is our rest api
   api:
     container_name: api
@@ -18,7 +19,3 @@ services:
       MARIADB_PASSWORD: test
       MARIADB_ROOT_PASSWORD: test
       MARIADB_DATABASE: test
-
-
-
-      

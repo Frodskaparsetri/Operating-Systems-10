@@ -10,13 +10,18 @@ FROM node:15-alpine
 # and everything from here on out is added to the /app folder within the docker image
 WORKDIR /app
 
-# copies everything from the local folder to the docker image 
-# (but is added to the /app folder due to the workdir being set before)
-COPY . .
+# copying the package.json into the /app folder
+## the reason we copy only the package.json, followed by an install, THEN we copy the rest
+## is because of how the layered caching functions in docker
+COPY package.json .
 
 # run executes a command, as you would in your terminal
 ## this specicially installs all the required dependencies
 RUN yarn --production
+
+# copies everything from the local folder to the docker image 
+# (but is added to the /app folder due to the workdir being set before)
+COPY . .
 
 # CMD lets you define a default command to run when your container starts
 ## in this case it is to execute the index.js file in node

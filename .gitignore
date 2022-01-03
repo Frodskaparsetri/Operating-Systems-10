@@ -4,8 +4,15 @@
 /docker/**/.pnp
 /docker/**/.pnp.js
 
+/kubernetes/**/node_modules
+/kubernetes/**/.pnp
+/kubernetes/**/.pnp.js
+
+
+
 # testing
 docker/**/coverage
+kubernetes/**/coverage
 
 # production
 /build

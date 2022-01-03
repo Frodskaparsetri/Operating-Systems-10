@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-file-deployment
+  # Added a namespace
+  namespace: namespace-a
+spec:
+  selector:
+    matchLabels:
+      app: my-file-deployment
+  template:
+    metadata:
+      labels:
+        app: my-file-deployment
+    spec:
+      containers:
+      - name: my-file-deployment
+        image: suuunly/osc-kube-test:1.0.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+  replicas: 4

@@ -1,0 +1,2 @@
+# we don't want to bring the entire module collection
+/node_modules/

@@ -1,0 +1,33 @@
+# Which version of the Kubernetes API you're using to create this object
+apiVersion: apps/v1
+
+# Specifies what type of kubernetes action it is:
+kind: Deployment
+
+# Metadata is often used to define the deployment outwards
+metadata:
+  name: my-file-deployment
+
+# The specs of the deployment
+# -- such as image, replica-set, max allowed computing power, e.t.c.
+spec:
+  selector:
+    matchLabels:
+      app: my-file-deployment
+
+  template:
+    metadata:
+      labels:
+        app: my-file-deployment
+    spec:
+    
+      # The docker container and pod details
+      containers:
+      - name: my-file-deployment
+        image: suuunly/osc-kube-test:1.0.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
